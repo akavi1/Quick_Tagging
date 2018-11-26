@@ -1,5 +1,6 @@
-# Quick Tagging is an anki2 addon for quickly adding tags while reviewing
+# Quick Tagging is an anki2.1 addon for quickly adding tags while reviewing
 # Copyright 2012 Cayenne Boyer
+# Copyright 2018 Arthur Milchior
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

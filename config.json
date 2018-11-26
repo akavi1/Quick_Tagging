@@ -1,0 +1,4 @@
+{
+    "tag shortcut": "q",
+    "quick tags": {"Shift+E":{"tags":"ExampleOfBuriedTags", "bury":true}}
+}
