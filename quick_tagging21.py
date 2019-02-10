@@ -18,9 +18,7 @@
 from aqt import mw
 from aqt.utils import getTag, tooltip
 from aqt.reviewer import Reviewer
-userOption = mw.addonManager.getConfig(__name__)
-tag_shortcut = userOption.get("tag shortcut","t")
-quick_tags = userOption.get("quick tags",dict()) # end quick_tags
+from .config import *
 
 def debug(t):
     print(t)
@@ -54,32 +52,50 @@ def quick_tag_method(map):
   debug(f"Call quick_tag_method({map})")
   def r():
     debug(f"Call function defined thanks to ({map})")
-    note = mw.reviewer.card.note()
-    if 'bury' in map and map['bury']:
-        mw.checkpoint("Add Tags and Bury")
-        addTags(note, map['tags'])
+    card = mw.reviewer.card
+    note = card.note()
+    if 'bury' in map and map['bury']:#old config. May eventually be removed.
+        map['action']='bury note'
+        del map['bury']
+        updateConfig()
+    action = map.get('action',"")
+    checkSuffix = {
+        "bury card":" and Bury Card",
+        "bury note":" and Bury Note",
+        "suspend card":" and Suspend Card",
+    }.get(action,"")
+    mw.checkpoint("Add Tags"+checkSuffix)
+    addTags(note, map['tags'])
+    if action == "bury card":
+        mw.col.sched.buryCards([card.id])
+    elif action == "bury note":
         mw.col.sched.buryNote(note.id)
+    elif action == "suspend card":
+        mw.col.sched.suspendCards([card.id])
+    if action:
         mw.reset()
-        tooltip('Added tag(s) "%s" and buried note' 
+    tooltipSuffix = {
+        "bury card":" and buried card",
+        "bury note":" and buried note",
+        "suspend card":" and suspended card",
+    }.get(action,"")
+    tooltip(f'Added tag(s) "%s"{tooltipSuffix}'
                 % map['tags'])
-    else:
-        mw.checkpoint(_("Add Tags"))
-        addTags(note, map['tags'])
-        tooltip('Added tag(s) "%s"' % map['tags'])
   return r
 
 def new_shortcutKeys():
+    tag_shortcut = getConfig().get("tag shortcut","t")
+    quick_tags = getConfig().get("quick tags",dict()) # end quick_tags
     sk=[(tag_shortcut, promptAndAddTags)]
     for key,map in quick_tags.items():
+        debug(f"{key}:{map}")
         sk.append((key,quick_tag_method(map)))
     debug(f"new_shortcutKeys(), returning {sk}")
     return sk
-        
+
 old_shortcutKeys = Reviewer._shortcutKeys
 def _shortcutKeys(self):
     shortcutKeys = old_shortcutKeys(self)+new_shortcutKeys()
-    # shortcutKeys= []
     debug(f"new_shortcutKeys(), returning {shortcutKeys}")
     return shortcutKeys
-Reviewer._shortcutKeys=_shortcutKeys 
-
+Reviewer._shortcutKeys=_shortcutKeys
