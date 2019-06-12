@@ -1,1 +1,2 @@
-zip ????.zip *py README.* LICENSE config* zipping ankiweb*
+rm quickTagging.zip
+zip quickTagging.zip *py README.* LICENSE config* zipping ankiweb*
