@@ -11,7 +11,7 @@ def getConfig():
 def updateConfig():
     mw.addonManager.writeConfig(__name__,userOption)
 
-def newConf():
+def newConf(newUserOption):
     global userOption
-    userOption = None
+    userOption = newUserOption
 mw.addonManager.setConfigUpdatedAction(__name__,newConf)
