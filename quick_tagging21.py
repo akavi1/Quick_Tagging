@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from aqt import mw
-from aqt.utils import getTag, tooltip
+from aqt.utils import getTag, tooltip, getText
 from aqt.reviewer import Reviewer
 from .config import *
 
@@ -42,11 +42,38 @@ def promptAndAddTags():
     prompt = _("Enter tags to add:")
     (tagString, r) = getTag(mw, mw.col, prompt)
     # don't do anything if we didn't get anything
-    if not r:
+    if (not r or not tagString):
         return
     # otherwise, add the given tags:
     addTags(note, tagString)
     tooltip('Added tag(s) "%s"' % tagString)
+
+def getTagAndNotSelectDefaultText(parent, deck, question, tags="user", default="", **kwargs):
+    from aqt.tagedit import TagEdit
+    te = TagEdit(parent)
+    te.setCol(deck)
+    te.setText(default)
+    ret = getText(question, parent, edit=te,
+                  geomKey='getTag', **kwargs)
+    te.hideCompleter()
+
+    return ret
+    
+# prompt for tags and edit the results to a note
+def promptAndEditTags():
+    # prompt for edit tags
+    mw.checkpoint(_("Edit Tags"))
+    note = mw.reviewer.card.note()
+    prompt = _("Edit tags:")
+    stringTags = note.stringTags()
+    (tagString, r) = getTagAndNotSelectDefaultText(mw, mw.col, prompt, default=stringTags)
+    # don't do anything if we didn't get anything
+    if not r:
+        return
+    # otherwise, add the given tags:
+    note.setTagsFromStr(tagString)
+    note.flush()
+    tooltip('Edited tags "%s"' % tagString)
 
 def quick_tag_method(map):
   #debug(f"Call quick_tag_method({map})")
@@ -84,9 +111,10 @@ def quick_tag_method(map):
   return r
 
 def new_shortcutKeys():
-    tag_shortcut = getConfig().get("tag shortcut","t")
+    tag_shortcut = getConfig().get("add tag shortcut","q")
+    tag_edit_shortcut = getConfig().get("edit tag shortcut","w")
     quick_tags = getConfig().get("quick tags",dict()) # end quick_tags
-    sk=[(tag_shortcut, promptAndAddTags)]
+    sk=[(tag_shortcut, promptAndAddTags),(tag_edit_shortcut,promptAndEditTags)]
     for key,map in quick_tags.items():
         #debug(f"{key}:{map}")
         sk.append((key,quick_tag_method(map)))
