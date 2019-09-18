@@ -1,4 +1,5 @@
-* tag shortcut: key which, when pressed during review, will open the tag adder.
+* add tag shortcut: key which, when pressed during review, will open the tag adder.
+* edit tag shortcut: key which, when pressed during review, will open the tag editor.
 * quick tags: a dictionnary which associate to a key(shortcut) a set of actions to do. One such action consists of a dictionnary. This dictionnary may have the following keys:
   * `tags`: the tag or tags which will be added to the note. (add " marked " to this string to ensure the card become marked)
   * `action`: what to do to the card/note. The possible values may be:

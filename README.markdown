@@ -1,11 +1,12 @@
 # Quickly adding tag
 ## Rationale
 
-This addon allows you to quickly add tags to a cards while reviewing.
+This addon allows you to quickly add tags or edit tags to a cards while reviewing.
 
 ## Usage
 
 * press q to open a tag adding dialog
+* press w to open a tag editing dialog
 * Press a key you configured to add some specific tag. Potentially
   burying/suspend simultaneously the card/note.
 
