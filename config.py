@@ -1,6 +1,7 @@
 userOption = None
 from aqt import mw
 
+
 def getConfig():
     global userOption
     if userOption is None:

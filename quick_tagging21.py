@@ -16,9 +16,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from aqt import mw
-from aqt.utils import getTag, tooltip
 from aqt.reviewer import Reviewer
+from aqt.utils import getTag, tooltip
+
 from .config import *
+
 
 def debug(t):
     #print(t)
