@@ -1,14 +1,14 @@
 # Quickly adding tag
 ## Rationale
 
-This addon allows you to quickly add tags or edit tags to a cards while reviewing.
+This addon allows you to quickly add tags or edit tags on a card while reviewing.
 
 ## Usage
 
-* press q to open a tag adding dialog
-* press w to open a tag editing dialog
-* Press a key you configured to add some specific tag. Potentially
-  burying/suspend simultaneously the card/note.
+* Press 'q' to open the tag adding dialog
+* Press 'w' to open the tag editing dialog
+* Configure keys to add some specific tag and optionally
+  bury/suspend the card/note.
 
 All options can be configured through the add-on manager. See the
 Configure section.
@@ -23,7 +23,7 @@ See the file [config.md](https://github.com/Arthur-Milchior/Quick_Tagging/blob/m
 It adds shortcut key to reviewer.
 
 ## Todo
-Allow to bury note (this is not do because scheduler only allow easily the three other actions)
+Allow to bury note (this is not done because scheduler only allows easily the three other actions)
 
 Key         |Value
 ------------|-------------------------------------------------------------------
