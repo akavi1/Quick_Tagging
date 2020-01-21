@@ -5,7 +5,7 @@
   * `action`: What to do to the card/note. The possible values are:
     * `bury note`
     * `bury card`
-    * `suspend`
+    * `suspend card`
 
 For example: 
 `'l': {'tags': 'hard marked', 'action': 'bury card'}`
