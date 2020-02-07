@@ -23,13 +23,9 @@ from aqt.reviewer import Reviewer
 from .config import *
 
 
-def debug(t):
-    #print(t)
-    pass
 # add space separated tags to a note
 
 def addTags(note, tagString):
-    #debug(f"Call addTags({note},{tagString})")
     # add tags to card
     tagList = mw.col.tags.split(tagString)
     for tag in tagList:
@@ -39,7 +35,6 @@ def addTags(note, tagString):
 # prompt for tags and add the results to a note
 def promptAndAddTags():
     # prompt for new tags
-    #debug(f"Call promptAndAddTags()")
     mw.checkpoint(_("Add Tags"))
     note = mw.reviewer.card.note()
     prompt = _("Enter tags to add:")
@@ -79,9 +74,7 @@ def promptAndEditTags():
     tooltip('Edited tags "%s"' % tagString)
 
 def quick_tag_method(map):
-  #debug(f"Call quick_tag_method({map})")
   def r():
-    #debug(f"Call function defined thanks to ({map})")
     card = mw.reviewer.card
     note = card.note()
     if 'bury' in map and map['bury']:#old config. May eventually be removed.
@@ -119,9 +112,7 @@ def new_shortcutKeys():
     quick_tags = getConfig().get("quick tags",dict()) # end quick_tags
     sk=[(tag_shortcut, promptAndAddTags),(tag_edit_shortcut,promptAndEditTags)]
     for key,map in quick_tags.items():
-        #debug(f"{key}:{map}")
         sk.append((key,quick_tag_method(map)))
-    #debug(f"new_shortcutKeys(), returning {sk}")
     return sk
 
 old_shortcutKeys = Reviewer._shortcutKeys
