@@ -19,7 +19,7 @@ from anki.lang import _
 from aqt import mw
 from aqt.utils import getTag, getText, tooltip
 from aqt.reviewer import Reviewer
-
+from anki.hooks import addHook
 from .config import *
 
 
@@ -115,9 +115,6 @@ def new_shortcutKeys():
         sk.append((key,quick_tag_method(map)))
     return sk
 
-old_shortcutKeys = Reviewer._shortcutKeys
-def _shortcutKeys(self):
-    shortcutKeys = old_shortcutKeys(self)+new_shortcutKeys()
-    #debug(f"new_shortcutKeys(), returning {shortcutKeys}")
-    return shortcutKeys
-Reviewer._shortcutKeys=_shortcutKeys
+def addShortcuts(shortcuts):
+    return shortcuts + new_shortcutKeys()
+addHook("reviewStateShortcuts", addShortcuts)
