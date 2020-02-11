@@ -116,5 +116,5 @@ def new_shortcutKeys():
     return sk
 
 def addShortcuts(shortcuts):
-    return shortcuts + new_shortcutKeys()
+    shortcuts.extend(new_shortcutKeys())
 addHook("reviewStateShortcuts", addShortcuts)
