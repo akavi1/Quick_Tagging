@@ -19,6 +19,7 @@ from anki.lang import _
 from aqt import mw
 from aqt.utils import getTag, getText, tooltip
 from aqt.reviewer import Reviewer
+from aqt.utils import tooltip
 from anki.hooks import addHook
 from .config import *
 
@@ -116,5 +117,12 @@ def new_shortcutKeys():
     return sk
 
 def addShortcuts(shortcuts):
-    shortcuts.extend(new_shortcutKeys())
+    usedShortcuts = {presentShortcut: fn for presentShortcut, fn in shortcuts}
+    newShortcuts = new_shortcutKeys()
+    for shortcut, fn in newShortcuts:
+        if shortcut not in usedShortcuts:
+            shortcuts.append((shortcut, fn))
+            usedShortcuts[shortcut] = fn
+        else:
+            tooltip(f"Warning: shortcut {shortcut} is already used by {usedShortcuts[shortcut]}. Please change it by editing quick tagging's configuration file.")
 addHook("reviewStateShortcuts", addShortcuts)
