@@ -87,6 +87,7 @@ def quick_tag_method(map):
         "bury card":" and Bury Card",
         "bury note":" and Bury Note",
         "suspend card":" and Suspend Card",
+        "suspend note":" and Suspend Note",
     }.get(action,"")
     mw.checkpoint("Add Tags"+checkSuffix)
     addTags(note, map['tags'])
@@ -96,12 +97,18 @@ def quick_tag_method(map):
         mw.col.sched.buryNote(note.id)
     elif action == "suspend card":
         mw.col.sched.suspendCards([card.id])
+    elif action == "suspend note":
+        cards = mw.col.findCards("nid:" + str(note.id))
+        # Suspend each card
+        for card_id in cards:
+            mw.col.sched.suspendCards([card_id])        
     if action:
         mw.reset()
     tooltipSuffix = {
         "bury card":" and buried card",
         "bury note":" and buried note",
         "suspend card":" and suspended card",
+        "suspend note":" and suspended note",
     }.get(action,"")
     tooltip(f'Added tag(s) "%s"{tooltipSuffix}'
                 % map['tags'])
